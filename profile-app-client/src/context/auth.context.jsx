@@ -19,12 +19,19 @@ function AuthProviderWrapper(props) {
         const storeToken = localStorage.getItem('token');
 
         if(storeToken) {
-            const response = await axios.get(`${API_BAKND}/auth/verify`, { headers: { AuthTokenCarier: `Bearer ${storeToken}`} } ) // NOTE!!! the declared AuthTokenCarier is casd insensitive... aka need to be small letters when refered in the backend. Somewhere they are toLowerCase()ed.
-            const resUser = response.data
-            // console.log("user response from the BAKND ==> ", resUser)
-            setIsLoggenIn(true);
-            setIsLoading(false);
-            setUser(resUser);
+            try {
+                const response = await axios.get(`${API_BAKND}/auth/verify`, { headers: { AuthTokenCarier: `Bearer ${storeToken}`} } ) // NOTE!!! the declared AuthTokenCarier is casd insensitive... aka need to be small letters when refered in the backend. Somewhere they are toLowerCase()ed.
+                const resUser = response.data
+                // console.log("user response from the BAKND ==> ", resUser)
+                setIsLoggenIn(true);
+                setIsLoading(false);
+                setUser(resUser);
+            } catch(err) {
+                console.log(err);
+                setIsLoggenIn(false);
+                setIsLoading(false);
+                setUser(null);
+            }
         } else {
             setIsLoggenIn(false);
             setIsLoading(false);
@@ -32,6 +39,14 @@ function AuthProviderWrapper(props) {
         }
     }
 
+    const removeToken = () => {
+        localStorage.removeItem('token')
+    }
+
+    const logOutUser = () => {
+        removeToken();
+        authenticateUser();
+    }
 
 
     useEffect(() => {
@@ -39,7 +54,7 @@ function AuthProviderWrapper(props) {
     }, [])
     
     return(
-        <AuthContext.Provider value={{ storeToken, authenticateUser, isLoggedIn, isLoading, user }}>
+        <AuthContext.Provider value={{ storeToken, authenticateUser, isLoggedIn, isLoading, user, logOutUser }}>
             {props.children}
         </AuthContext.Provider>
     )

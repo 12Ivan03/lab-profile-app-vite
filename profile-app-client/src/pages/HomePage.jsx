@@ -8,7 +8,13 @@ function HomePage() {
 
     return(
         <div>
-            {isLoggedIn && <p>Hello {user.username}</p>    }
+            {isLoggedIn && 
+            <div>
+                <p>Hello {user.username}</p>    
+                <Link to={'/profile'}><button>Your profile</button></Link>
+            </div>
+            }
+            
             <Link to={'/signup'}><button>Sign up</button></Link>
             <Link to={'/login'}><button>Log in</button></Link>
         </div>

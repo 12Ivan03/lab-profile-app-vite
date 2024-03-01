@@ -27,7 +27,7 @@ function SignupPage() {
         const reqBody = { username, password, campus, course };
 
         try{
-            const singupRequest = axios.post(`${API_BAKND}/auth/signup`, reqBody);
+            axios.post(`${API_BAKND}/auth/signup`, reqBody);
             navigate('/login');
         } catch(err){
             console.log('thi si the err from SignupPage =>',err)

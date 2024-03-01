@@ -9,15 +9,15 @@ router.get("/user", async (req, res, next) => {
     // console.log('username , from req.payload ==>', req.payload )
 
     try{
-      // console.log('message from the try')
+      console.log('message from the try')
       const findUser = await User.findById({ _id });
-      // console.log('message after the findOne ==> ', findUser)
+      console.log('message after the findOne ==> ', findUser)
       if(!findUser){
           return res.json({ message: 'User not found'});
       } else {
         // console.log('message from the else  ==> ')
           const foundUser = { _id: findUser._id, username: findUser.username, campus: findUser.campus, course: findUser.course, image: findUser.image }
-          // console.log('message after the foundUser  ==> ', foundUser )
+          console.log('message after the foundUser  ==> ', foundUser )
           return res.json(foundUser);
       }
 

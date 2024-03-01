@@ -56,7 +56,7 @@ router.post('/login', async (req, res, next) => {
 
         if(checkPassword){
 
-            const payload = { username: findUser.username, _id: findUser._id, campus: findUser.campus, course: findUser.course }
+            const payload = { username: findUser.username, _id: findUser._id, campus: findUser.campus, course: findUser.course, image: findUser.image }
             
             const userToken = jwt.sign(
                 payload,
